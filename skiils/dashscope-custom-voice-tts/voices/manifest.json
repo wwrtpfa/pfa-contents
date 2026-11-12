@@ -1,0 +1,79 @@
+{
+  "version": 10,
+  "default_voice": "pfa",
+  "locked": [
+    "pfa",
+    "nahida"
+  ],
+  "note": "命名词表：用户说「用 X 的声音」时先用 scripts/voices.py 解析到这里。local = 本机 Qwen3-TTS 零样本克隆（音色来自 ref_audio + ref_text）；bailian = 百炼自定义音色（音色来自服务端 voice_id）。本人默认走本地离线克隆。2026-11-06 定案：用户试听同一文案的两条对比成品后，指定 10.31 s 参考作为唯一本人参考音频，并删除 2026-11-04 那批全部对照素材（pfa-mic / pfa-clean8 / pfa-clean12 / pfa-orig-long / pfa-specified 的 wav 已不在磁盘上，对应条目一并撤销）。文件已重命名为 voices/pfa.wav（内容与原 pfa-specified.wav 相同，SHA 90545ea6…）。历史定案（18.12 s 真人麦克风原声，SHA ef4d7276…）在本技能目录里已无副本，唯一残存副本是 ~/Library/Application Support/DouyinWelcome/voice/26FA14DC-AEB0-4D99-9C04-6AE3D1F77A65.wav；除非用户明确要求，不要据此把默认参考改回去。pfa 与 nahida 标记 locked 并登记 ref_sha256，scripts/voices.py --verify 可核对；合成脚本在用音色表参考时自动校验，指纹不符直接报错。要有意换参考必须先改本文件的 ref_sha256 / ref_text / locked，不要只覆盖 wav 文件。纳西妲的参考音频、逐字稿、别名与指纹自始至终未改动。",
+  "voices": {
+    "pfa": {
+      "label": "PFA 本人（本地千问3 克隆 · 10.31 s 参考）",
+      "kind": "本人",
+      "engine": "local",
+      "model": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-4bit",
+      "lang": "Chinese",
+      "ref_audio": "voices/pfa.wav",
+      "ref_sha256": "90545ea668a7bd6581f0eaf2340b85fa4a6c43b6de900ee59f7e41c901fa19a5",
+      "ref_text": "这一期想讲的内容其实不复杂，就是把每一步都写清楚，别让后面的自己猜；如果中间卡住了，先记下来，回头再一起补上。",
+      "aliases": [
+        "PFA",
+        "pfa",
+        "我的声音",
+        "我自己的声音",
+        "用我的声音",
+        "本人的声音",
+        "本人",
+        "彭凡遨",
+        "彭发豪",
+        "本地PFA",
+        "PFA本地克隆",
+        "默认音色",
+        "本地就用这个",
+        "就用这个声音"
+      ],
+      "default": true,
+      "locked": true,
+      "source": "2026-11-06 用户定案。参考音频 10.313 s / 24 kHz / 单声道，峰值 0.95，短于 15 s 无跑飞风险；它是 2026-11-04 由 8.7 s 云端净化参考本地克隆出的长句成品，即二次克隆素材。当天同一句 34 字文案的对照实测：本参考 6.77 s / rms 0.132 / 最安静 0.5 s 窗 0.00218；另一条 14.75 s 真人麦克风录音 5.20 s / rms 0.036 / 底噪窗 0.00829。用户听完选定本条，并指示其余 PFA 素材全部删除、不留回退项。已知取舍：句间不是真静音，且属于模型生成物当参考，音色会带一层模型痕迹——这是用户知情后的选择，不要再自行换回真人原声",
+      "authorization": "本人录音，自用无需额外授权。"
+    },
+    "pfa-cloud": {
+      "label": "PFA（百炼云端自定义音色）",
+      "kind": "本人",
+      "engine": "bailian",
+      "model": "qwen-audio-3.1-tts-flash",
+      "voice_id": "qwen-audio-3.1-tts-flash-bailian-a993b5d5395045d1ace4a7a327bff760",
+      "ws_url": "wss://llm-qol41lfxij0bums6.cn-beijing.maas.aliyuncs.com/api-ws/v1/inference",
+      "aliases": [
+        "百炼PFA",
+        "云PFA",
+        "云端PFA",
+        "PFA云端",
+        "默认云端"
+      ],
+      "authorization": "技能原有默认自定义音色，沿用既有授权；云端调用产生费用。"
+    },
+    "nahida": {
+      "label": "纳西妲",
+      "kind": "第三方游戏角色",
+      "engine": "local",
+      "model": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-4bit",
+      "lang": "Chinese",
+      "ref_audio": "voices/nahida.wav",
+      "ref_sha256": "49c22d53fc9a2b03f707e938efd22c456d8631356f469c8370d0643a30287bb8",
+      "ref_text": "你好，我是纳西妲。我是这个世界上最温柔、最可爱的女孩子。我希望我用我治愈的声音能够让你受伤的心灵得到一点慰藉,喜欢我的话可以点点赞和关注吗",
+      "aliases": [
+        "纳西妲",
+        "纳西达",
+        "nacida",
+        "nahida",
+        "naxida",
+        "草神",
+        "小吉祥草王"
+      ],
+      "locked": true,
+      "source": "项目内直播参考音频（Desktop/cs/免费RVC音色-纳西妲-音频-…-20261031.wav，14.56 s / 24 kHz / 单声道），已随技能存入 voices/nahida.wav。用户多次强调「纳西妲音色不要变」，故与 pfa 一同锁定指纹",
+      "authorization": "第三方角色音色：仅限私人试听与自用；公开直播/发布需取得授权并标注 AI 合成。"
+    }
+  }
+}
